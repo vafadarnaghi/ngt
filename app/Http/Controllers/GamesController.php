@@ -24,8 +24,8 @@ class GamesController extends Controller
     {
         $newAccessToken = $createAccessToken($accessToken);
 
-        return redirect()->action(
-            [GamesController::class, 'index'],
+        return redirect()->route(
+            'game.index',
             ['accessToken' => $newAccessToken->id],
         );
     }
@@ -44,8 +44,8 @@ class GamesController extends Controller
     {
         $result = $play($accessToken);
 
-        return redirect()->action(
-            [GamesController::class, 'result'],
+        return redirect()->route(
+            'game.result',
             [
                 'accessToken' => $accessToken->id,
                 'resultId' => $result->id,

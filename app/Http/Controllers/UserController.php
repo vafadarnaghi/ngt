@@ -19,8 +19,8 @@ class UserController extends Controller
 
         $accessToken = $createAccessToken($newUser);
 
-        return redirect()->action(
-            [GamesController::class, 'index'],
+        return redirect()->route(
+            'game.index',
             ['accessToken' => $accessToken->id],
         );
     }
