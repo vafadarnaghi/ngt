@@ -6,9 +6,7 @@ use App\Actions\CreateGameUrl;
 use App\Actions\DeactivateGameUrl;
 use App\Actions\Play;
 use App\Actions\RetrieveHistory;
-use App\Actions\RetrieveResult;
 use App\Models\GameUrl;
-use App\Models\Result;
 use Random\RandomException;
 
 class GamesController extends Controller
