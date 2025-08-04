@@ -8,7 +8,6 @@ use App\Models\GameUrl;
 
 final readonly class DeactivateGameUrl
 {
-
     public function __invoke(GameUrl $gameUrl): void
     {
         $gameUrl->delete();

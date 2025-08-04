@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Actions\Play;
-use App\Actions\RetrieveGame;
 use App\Enums\Outcome;
 use App\Helpers\RandomInt;
 use App\Models\GameUrl;

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [UserController::class, 'register']);
 Route::post('users/register', [UserController::class, 'create']);
 
-Route::middleware(CheckGameUrlMiddleware::class)->group( function () {
+Route::middleware(CheckGameUrlMiddleware::class)->group(function () {
     Route::controller(GamesController::class)->group(function () {
         Route::get('games/{gameUrl}', 'index')->name('game.index');
         Route::post('games/{gameUrl}/create', 'create')->name('game.create');

@@ -14,7 +14,7 @@ class CheckGameUrlTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $gameUrl = new GameUrl();
+        $gameUrl = new GameUrl;
         $gameUrl->expires_at = Carbon::now()->subSeconds(1);
         $checkGameUrl = new CheckGameUrl;
         $checkGameUrl($gameUrl);
@@ -24,7 +24,7 @@ class CheckGameUrlTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $gameUrl = new GameUrl();
+        $gameUrl = new GameUrl;
         $gameUrl->expires_at = Carbon::now()->addSeconds(1);
         $checkGameUrl = new CheckGameUrl;
         $checkGameUrl($gameUrl);

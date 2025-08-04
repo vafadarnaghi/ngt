@@ -21,7 +21,7 @@ class CreateGameUrlTest extends TestCase
 
         $user = User::factory()->create();
 
-        $createGameUrl = new CreateGameUrl();
+        $createGameUrl = new CreateGameUrl;
 
         $gameUrl = $createGameUrl($user);
 

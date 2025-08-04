@@ -11,9 +11,7 @@ readonly class CheckGameUrlMiddleware
 {
     public function __construct(
         private CheckGameUrl $checkGameUrl,
-    )
-    {
-    }
+    ) {}
 
     /**
      * Handle an incoming request.
@@ -23,6 +21,7 @@ readonly class CheckGameUrlMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $this->checkGameUrl->__invoke($request->gameUrl);
+
         return $next($request);
     }
 }
