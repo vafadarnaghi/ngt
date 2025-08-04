@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Actions\Play;
 use App\Actions\RetrieveGame;
 use App\Enums\Outcome;
+use App\Helpers\RandomInt;
 use App\Models\AccessToken;
 use App\Models\Result;
 use DG\BypassFinals;
@@ -21,7 +22,9 @@ class PlayActionTest extends TestCase
 
     private AccessToken $accessToken;
 
-    private Play $playActionMock;
+    private RandomInt $randomInt;
+
+    private Play $playAction;
 
     protected function setUp(): void
     {
@@ -37,10 +40,10 @@ class PlayActionTest extends TestCase
             ->method('__invoke')
             ->willReturn($this->accessToken->game);
 
-        $this->playActionMock = $this->getMockBuilder(Play::class)
-            ->setConstructorArgs([$retrieveGameAction])
-            ->onlyMethods(['generateNumber'])
+        $this->randomInt = $this->getMockBuilder(RandomInt::class)
             ->getMock();
+
+        $this->playAction = new Play($retrieveGameAction, $this->randomInt);
     }
 
     /**
@@ -48,11 +51,11 @@ class PlayActionTest extends TestCase
      */
     public function test_result_saved(): void
     {
-        $this->playActionMock->expects($this->once())
-            ->method('generateNumber')
+        $this->randomInt->expects($this->once())
+            ->method('__invoke')
             ->willReturn(10);
 
-        $result = $this->playActionMock->__invoke($this->accessToken);
+        $result = $this->playAction->__invoke($this->accessToken);
 
         $this->assertEquals($this->accessToken->game->id, $result->game_id);
         $this->assertDatabaseHas(
@@ -71,11 +74,11 @@ class PlayActionTest extends TestCase
     #[DataProvider('playResults')]
     public function test_play_results(int $randomNumber, Outcome $outcome, float $amount): void
     {
-        $this->playActionMock->expects($this->once())
-            ->method('generateNumber')
+        $this->randomInt->expects($this->once())
+            ->method('__invoke')
             ->willReturn($randomNumber);
 
-        $result = $this->playActionMock->__invoke($this->accessToken);
+        $result = $this->playAction->__invoke($this->accessToken);
 
         $this->assertEquals($outcome, $result->outcome);
         $this->assertEquals($amount, $result->amount);
@@ -100,7 +103,6 @@ class PlayActionTest extends TestCase
             ['randomNumber' => 201, 'outcome' => Outcome::LOSE, 'amount' => 0],
             ['randomNumber' => 160, 'outcome' => Outcome::WIN, 'amount' => 16],
             ['randomNumber' => 86, 'outcome' => Outcome::WIN, 'amount' => 8.6],
-            ['randomNumber' => 86, 'outcome' => Outcome::WIN, 'amount' => 8.6],
         ];
     }
 
@@ -113,11 +115,11 @@ class PlayActionTest extends TestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Number must be between 1 and 1000');
 
-        $this->playActionMock->expects($this->once())
-            ->method('generateNumber')
+        $this->randomInt->expects($this->once())
+            ->method('__invoke')
             ->willReturn($randomNumber);
 
-        $this->playActionMock->__invoke($this->accessToken);
+        $this->playAction->__invoke($this->accessToken);
 
     }
 
