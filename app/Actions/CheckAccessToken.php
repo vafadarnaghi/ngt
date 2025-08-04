@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final readonly class CheckAccessToken
 {
-    public function hande(AccessToken $accessToken): void
+    public function __invoke(AccessToken $accessToken): void
     {
         if (Carbon::now() > $accessToken->expires_at) {
             throw new ModelNotFoundException;

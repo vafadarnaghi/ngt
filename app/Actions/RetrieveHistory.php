@@ -19,10 +19,10 @@ final readonly class RetrieveHistory
     /**
      * @return Collection<Result>
      */
-    public function handle(AccessToken $accessToken): Collection
+    public function __invoke(AccessToken $accessToken): Collection
     {
         return $this->retrieveGame
-            ->handle($accessToken)
+            ->__invoke($accessToken)
             ->results()
             ->orderByDesc('created_at')
             ->limit(self::HISTORY_COUNT)

@@ -14,9 +14,9 @@ final readonly class RetrieveResult
         private RetrieveGame $retrieveGame,
     ) {}
 
-    public function handle(AccessToken $accessToken, string $resultId): Result
+    public function __invoke(AccessToken $accessToken, string $resultId): Result
     {
-        $game = $this->retrieveGame->handle($accessToken);
+        $game = $this->retrieveGame->__invoke($accessToken);
         $result = Result::findOrFail($resultId);
 
         if ($result->game_id !== $game->id) {

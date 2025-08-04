@@ -12,9 +12,9 @@ final readonly class DeactivateAccessToken
         private CheckAccessToken $checkAccessToken,
     ) {}
 
-    public function handle(AccessToken $accessToken): void
+    public function __invoke(AccessToken $accessToken): void
     {
-        $this->checkAccessToken->hande($accessToken);
+        $this->checkAccessToken->__invoke($accessToken);
         $accessToken->delete();
     }
 }

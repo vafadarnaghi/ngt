@@ -17,12 +17,12 @@ final readonly class CreateAccessToken
         private RetrieveGame $retrieveGame,
     ) {}
 
-    public function handle(User|AccessToken $source)
+    public function __invoke(User|AccessToken $source)
     {
         if ($source instanceof User) {
             $userId = $source->id;
         } else {
-            $userId = $this->retrieveGame->handle($source)->user_id;
+            $userId = $this->retrieveGame->__invoke($source)->user_id;
         }
 
         $newGame = Game::create(['user_id' => $userId]);

@@ -34,7 +34,7 @@ class PlayActionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $retrieveGameAction->expects($this->once())
-            ->method('handle')
+            ->method('__invoke')
             ->willReturn($this->accessToken->game);
 
         $this->playActionMock = $this->getMockBuilder(Play::class)
@@ -52,7 +52,7 @@ class PlayActionTest extends TestCase
             ->method('generateNumber')
             ->willReturn(10);
 
-        $result = $this->playActionMock->handle($this->accessToken);
+        $result = $this->playActionMock->__invoke($this->accessToken);
 
         $this->assertEquals($this->accessToken->game->id, $result->game_id);
         $this->assertDatabaseHas(
@@ -75,7 +75,7 @@ class PlayActionTest extends TestCase
             ->method('generateNumber')
             ->willReturn($randomNumber);
 
-        $result = $this->playActionMock->handle($this->accessToken);
+        $result = $this->playActionMock->__invoke($this->accessToken);
 
         $this->assertEquals($outcome, $result->outcome);
         $this->assertEquals($amount, $result->amount);
@@ -117,7 +117,7 @@ class PlayActionTest extends TestCase
             ->method('generateNumber')
             ->willReturn($randomNumber);
 
-        $this->playActionMock->handle($this->accessToken);
+        $this->playActionMock->__invoke($this->accessToken);
 
     }
 

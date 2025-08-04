@@ -15,24 +15,24 @@ class GamesController extends Controller
 {
     public function index(AccessToken $accessToken, CheckAccessToken $checkAccessToken)
     {
-        $checkAccessToken->hande($accessToken);
+        $checkAccessToken($accessToken);
 
         return view('game/index', ['accessToken' => $accessToken->id]);
     }
 
     public function create(AccessToken $accessToken, CreateAccessToken $createAccessToken)
     {
-        $accessToken = $createAccessToken->handle($accessToken);
+        $newAccessToken = $createAccessToken($accessToken);
 
         return redirect()->action(
             [GamesController::class, 'index'],
-            ['accessToken' => $accessToken->id],
+            ['accessToken' => $newAccessToken->id],
         );
     }
 
     public function deactivate(AccessToken $accessToken, DeactivateAccessToken $deactivateAccessToken)
     {
-        $deactivateAccessToken->handle($accessToken);
+        $deactivateAccessToken($accessToken);
 
         return redirect('/');
     }
@@ -42,7 +42,7 @@ class GamesController extends Controller
      */
     public function play(AccessToken $accessToken, Play $play)
     {
-        $result = $play->handle($accessToken);
+        $result = $play($accessToken);
 
         return redirect()->action(
             [GamesController::class, 'result'],
@@ -55,7 +55,7 @@ class GamesController extends Controller
 
     public function result(AccessToken $accessToken, string $resultId, RetrieveResult $retrieveResult)
     {
-        $result = $retrieveResult->handle($accessToken, $resultId);
+        $result = $retrieveResult($accessToken, $resultId);
 
         return view(
             'game/result',
@@ -68,7 +68,7 @@ class GamesController extends Controller
 
     public function history(AccessToken $accessToken, RetrieveHistory $retrieveHistory)
     {
-        $results = $retrieveHistory->handle($accessToken);
+        $results = $retrieveHistory($accessToken);
 
         return view(
             'game/history',

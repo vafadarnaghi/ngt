@@ -23,9 +23,9 @@ final readonly class Play
     /**
      * @throws RandomException
      */
-    public function handle(AccessToken $accessToken): Result
+    public function __invoke(AccessToken $accessToken): Result
     {
-        $game = $this->retrieveGame->handle($accessToken);
+        $game = $this->retrieveGame->__invoke($accessToken);
 
         $number = $this->generateNumber();
         if ($number < self::MIN_RANDOM_NUMBER || $number > self::MAX_RANDOM_NUMBER) {

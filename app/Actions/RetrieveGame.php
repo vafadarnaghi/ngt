@@ -13,9 +13,9 @@ final readonly class RetrieveGame
         private CheckAccessToken $checkAccessToken,
     ) {}
 
-    public function handle(AccessToken $accessToken): Game
+    public function __invoke(AccessToken $accessToken): Game
     {
-        $this->checkAccessToken->hande($accessToken);
+        $this->checkAccessToken->__invoke($accessToken);
 
         return $accessToken->game;
     }
