@@ -1,33 +1,14 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layout.default')
 
-        <title>Game App</title>
-    </head>
-    <body>
-        <div>
-            Outcome: {{ $result->outcome->label() }}
-            Amount: {{ $result->amount }}
+@section('content')
+    <div class="row">
+        @include('layout.form')
+        @include('layout.history-link')
+    </div>
+    <div class="row text-center m-5">
+        <div class="col">
+            <h1>Outcome: {{ $result->outcome->label() }}</h1>
+            <h1>Amount: {{ $result->amount }}</h1>
         </div>
-        <div>
-            <form method="post" action="{{ route('play', $accessToken) }}">
-                @csrf
-                <input type="submit" name="submit" value="I feel lucky">
-            </form>
-            <form method="POST" action="{{ route('deactivate', $accessToken) }}">
-                @csrf
-                @method('DELETE')
-                <input type="submit" name="submit" value="Deactivate">
-            </form>
-            <form method="post" action="{{ route('createGame', $accessToken) }}">
-                @csrf
-                <input type="submit" name="submit" value="Create new game">
-            </form>
-        </div>
-        <div>
-            <a href="{{ route('history', $accessToken)  }}">History</a>
-        </div>
-    </body>
-</html>
+    </div>
+@endsection

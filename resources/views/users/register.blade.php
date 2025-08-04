@@ -1,29 +1,29 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layout.default')
 
-    <title>game app</title>
-    </head>
-    <body>
+@section('content')
+    <div class="col-4">
         @if ($errors->any())
-            <div>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="row alert alert-danger m-2">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
-
-        <form method="POST" action="users/register">
-            @csrf
-            <label>Name:</label>
-            <input type="text" name="name" />
-            <label>Phone number:</label>
-            <input type="text" name="phone_number" />
-            <input type="submit" value="Register">
-        </form>
-    </body>
-</html>
+        <div class="row">
+            <form method="POST" action="users/register">
+                @csrf
+                <div class="form-group m-2">
+                    <label class="form-label">Name:</label>
+                    <input type="text" name="name" class="form-control" />
+                </div>
+                <div class="form-group m-2">
+                    <label class="form-label">Phone number:</label>
+                    <input type="text" name="phone_number" class="form-control"/>
+                </div>
+                <button type="submit" class="btn btn-primary m-2">Register</button>
+            </form>
+        </div>
+    </div>
+@endsection
