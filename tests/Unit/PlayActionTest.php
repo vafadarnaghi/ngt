@@ -33,17 +33,10 @@ class PlayActionTest extends TestCase
 
         $this->gameUrl = GameUrl::factory()->create();
 
-        $retrieveGameAction = $this->getMockBuilder(RetrieveGame::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $retrieveGameAction->expects($this->once())
-            ->method('__invoke')
-            ->willReturn($this->gameUrl->game);
-
         $this->randomInt = $this->getMockBuilder(RandomInt::class)
             ->getMock();
 
-        $this->playAction = new Play($retrieveGameAction, $this->randomInt);
+        $this->playAction = new Play($this->randomInt);
     }
 
     /**

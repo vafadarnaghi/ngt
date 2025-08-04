@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CheckGameUrl;
 use App\Actions\CreateGameUrl;
 use App\Actions\DeactivateGameUrl;
 use App\Actions\Play;
@@ -14,10 +13,8 @@ use Random\RandomException;
 
 class GamesController extends Controller
 {
-    public function index(GameUrl $gameUrl, CheckGameUrl $checkGameUrl)
+    public function index(GameUrl $gameUrl)
     {
-        $checkGameUrl($gameUrl);
-
         return view('game/index', ['gameUrl' => $gameUrl]);
     }
 

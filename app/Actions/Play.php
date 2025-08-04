@@ -18,7 +18,6 @@ final readonly class Play
     private const MAX_RANDOM_NUMBER = 1000;
 
     public function __construct(
-        private RetrieveGame $retrieveGame,
         private RandomInt $randomInt,
     ) {}
 
@@ -27,15 +26,13 @@ final readonly class Play
      */
     public function __invoke(GameUrl $gameUrl): Result
     {
-        $game = $this->retrieveGame->__invoke($gameUrl);
-
         $number = $this->randomInt->__invoke(self::MIN_RANDOM_NUMBER, self::MAX_RANDOM_NUMBER);
         if ($number < self::MIN_RANDOM_NUMBER || $number > self::MAX_RANDOM_NUMBER) {
             throw new RuntimeException('Number must be between 1 and 1000');
         }
 
         return Result::create([
-            'game_id' => $game->id,
+            'game_id' => $gameUrl->game->id,
             'outcome' => $this->analyzeOutcome($number),
             'amount' => $this->analyzeAmount($number),
         ]);

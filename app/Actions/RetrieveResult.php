@@ -10,15 +10,9 @@ use Illuminate\Validation\UnauthorizedException;
 
 final readonly class RetrieveResult
 {
-    public function __construct(
-        private RetrieveGame $retrieveGame,
-    ) {}
-
     public function __invoke(GameUrl $gameUrl, Result $result): Result
     {
-        $game = $this->retrieveGame->__invoke($gameUrl);
-
-        if ($result->game_id !== $game->id) {
+        if ($result->game_id !== $gameUrl->game->id) {
             throw new UnauthorizedException;
         }
 
