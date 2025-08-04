@@ -14,7 +14,6 @@ Route::middleware(CheckGameUrlMiddleware::class)->group(function () {
         Route::post('games/{gameUrl}', 'create')->name('game.create');
         Route::delete('games/{gameUrl}', 'deactivate')->name('game.deactivate');
         Route::post('games/{gameUrl}/play', 'play')->name('game.play');
-        Route::get('games/{gameUrl}/play/{result}', 'result')->name('game.result');
         Route::get('games/{gameUrl}/history', 'history')->name('game.history');
     });
 });

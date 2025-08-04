@@ -42,19 +42,6 @@ class GamesController extends Controller
     {
         $result = $play($gameUrl);
 
-        return redirect()->route(
-            'game.result',
-            [
-                'gameUrl' => $gameUrl,
-                'result' => $result,
-            ],
-        );
-    }
-
-    public function result(GameUrl $gameUrl, Result $result, RetrieveResult $retrieveResult)
-    {
-        $result = $retrieveResult($gameUrl, $result);
-
         return view(
             'game/result',
             [
