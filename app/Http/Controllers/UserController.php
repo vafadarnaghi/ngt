@@ -21,7 +21,7 @@ class UserController extends Controller
 
         return redirect()->route(
             'game.index',
-            ['gameUrl' => $gameUrl->id],
+            ['gameUrl' => $gameUrl],
         );
     }
 }

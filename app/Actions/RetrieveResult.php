@@ -14,10 +14,9 @@ final readonly class RetrieveResult
         private RetrieveGame $retrieveGame,
     ) {}
 
-    public function __invoke(GameUrl $gameUrl, string $resultId): Result
+    public function __invoke(GameUrl $gameUrl, Result $result): Result
     {
         $game = $this->retrieveGame->__invoke($gameUrl);
-        $result = Result::findOrFail($resultId);
 
         if ($result->game_id !== $game->id) {
             throw new UnauthorizedException;

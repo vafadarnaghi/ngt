@@ -12,6 +12,6 @@ Route::controller(GamesController::class)->group(function () {
     Route::post('games/{gameUrl}/create', 'create')->name('game.create');
     Route::delete('games/{gameUrl}/deactivate', 'deactivate')->name('game.deactivate');
     Route::post('games/{gameUrl}/play', 'play')->name('game.play');
-    Route::get('games/{gameUrl}/results/{resultId}', 'result')->name('game.result');
+    Route::get('games/{gameUrl}/results/{result}', 'result')->name('game.result');
     Route::get('games/{gameUrl}/history', 'history')->name('game.history');
 });

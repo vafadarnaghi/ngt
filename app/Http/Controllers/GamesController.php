@@ -9,6 +9,7 @@ use App\Actions\Play;
 use App\Actions\RetrieveHistory;
 use App\Actions\RetrieveResult;
 use App\Models\GameUrl;
+use App\Models\Result;
 use Random\RandomException;
 
 class GamesController extends Controller
@@ -17,7 +18,7 @@ class GamesController extends Controller
     {
         $checkGameUrl($gameUrl);
 
-        return view('game/index', ['gameUrl' => $gameUrl->id]);
+        return view('game/index', ['gameUrl' => $gameUrl]);
     }
 
     public function create(GameUrl $gameUrl, CreateGameUrl $createGameUrl)
@@ -26,7 +27,7 @@ class GamesController extends Controller
 
         return redirect()->route(
             'game.index',
-            ['gameUrl' => $newGameUrl->id],
+            ['gameUrl' => $newGameUrl],
         );
     }
 
@@ -47,20 +48,20 @@ class GamesController extends Controller
         return redirect()->route(
             'game.result',
             [
-                'gameUrl' => $gameUrl->id,
-                'resultId' => $result->id,
+                'gameUrl' => $gameUrl,
+                'result' => $result,
             ],
         );
     }
 
-    public function result(GameUrl $gameUrl, string $resultId, RetrieveResult $retrieveResult)
+    public function result(GameUrl $gameUrl, Result $result, RetrieveResult $retrieveResult)
     {
-        $result = $retrieveResult($gameUrl, $resultId);
+        $result = $retrieveResult($gameUrl, $result);
 
         return view(
             'game/result',
             [
-                'gameUrl' => $gameUrl->id,
+                'gameUrl' => $gameUrl,
                 'result' => $result,
             ],
         );
@@ -73,7 +74,7 @@ class GamesController extends Controller
         return view(
             'game/history',
             [
-                'gameUrl' => $gameUrl->id,
+                'gameUrl' => $gameUrl,
                 'latestResults' => $results,
             ],
         );
