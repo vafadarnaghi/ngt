@@ -6,7 +6,7 @@ namespace App\Actions;
 
 use App\Enums\Outcome;
 use App\Helpers\RandomInt;
-use App\Models\AccessToken;
+use App\Models\GameUrl;
 use App\Models\Result;
 use Random\RandomException;
 use RuntimeException;
@@ -25,9 +25,9 @@ final readonly class Play
     /**
      * @throws RandomException
      */
-    public function __invoke(AccessToken $accessToken): Result
+    public function __invoke(GameUrl $gameUrl): Result
     {
-        $game = $this->retrieveGame->__invoke($accessToken);
+        $game = $this->retrieveGame->__invoke($gameUrl);
 
         $number = $this->randomInt->__invoke(self::MIN_RANDOM_NUMBER, self::MAX_RANDOM_NUMBER);
         if ($number < self::MIN_RANDOM_NUMBER || $number > self::MAX_RANDOM_NUMBER) {

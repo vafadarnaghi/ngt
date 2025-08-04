@@ -2,37 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CheckAccessToken;
-use App\Actions\CreateAccessToken;
-use App\Actions\DeactivateAccessToken;
+use App\Actions\CheckGameUrl;
+use App\Actions\CreateGameUrl;
+use App\Actions\DeactivateGameUrl;
 use App\Actions\Play;
 use App\Actions\RetrieveHistory;
 use App\Actions\RetrieveResult;
-use App\Models\AccessToken;
+use App\Models\GameUrl;
 use Random\RandomException;
 
 class GamesController extends Controller
 {
-    public function index(AccessToken $accessToken, CheckAccessToken $checkAccessToken)
+    public function index(GameUrl $gameUrl, CheckGameUrl $checkGameUrl)
     {
-        $checkAccessToken($accessToken);
+        $checkGameUrl($gameUrl);
 
-        return view('game/index', ['accessToken' => $accessToken->id]);
+        return view('game/index', ['gameUrl' => $gameUrl->id]);
     }
 
-    public function create(AccessToken $accessToken, CreateAccessToken $createAccessToken)
+    public function create(GameUrl $gameUrl, CreateGameUrl $createGameUrl)
     {
-        $newAccessToken = $createAccessToken($accessToken);
+        $newGameUrl = $createGameUrl($gameUrl);
 
         return redirect()->route(
             'game.index',
-            ['accessToken' => $newAccessToken->id],
+            ['gameUrl' => $newGameUrl->id],
         );
     }
 
-    public function deactivate(AccessToken $accessToken, DeactivateAccessToken $deactivateAccessToken)
+    public function deactivate(GameUrl $gameUrl, DeactivateGameUrl $deactivateGameUrl)
     {
-        $deactivateAccessToken($accessToken);
+        $deactivateGameUrl($gameUrl);
 
         return redirect('/');
     }
@@ -40,40 +40,40 @@ class GamesController extends Controller
     /**
      * @throws RandomException
      */
-    public function play(AccessToken $accessToken, Play $play)
+    public function play(GameUrl $gameUrl, Play $play)
     {
-        $result = $play($accessToken);
+        $result = $play($gameUrl);
 
         return redirect()->route(
             'game.result',
             [
-                'accessToken' => $accessToken->id,
+                'gameUrl' => $gameUrl->id,
                 'resultId' => $result->id,
             ],
         );
     }
 
-    public function result(AccessToken $accessToken, string $resultId, RetrieveResult $retrieveResult)
+    public function result(GameUrl $gameUrl, string $resultId, RetrieveResult $retrieveResult)
     {
-        $result = $retrieveResult($accessToken, $resultId);
+        $result = $retrieveResult($gameUrl, $resultId);
 
         return view(
             'game/result',
             [
-                'accessToken' => $accessToken->id,
+                'gameUrl' => $gameUrl->id,
                 'result' => $result,
             ],
         );
     }
 
-    public function history(AccessToken $accessToken, RetrieveHistory $retrieveHistory)
+    public function history(GameUrl $gameUrl, RetrieveHistory $retrieveHistory)
     {
-        $results = $retrieveHistory($accessToken);
+        $results = $retrieveHistory($gameUrl);
 
         return view(
             'game/history',
             [
-                'accessToken' => $accessToken->id,
+                'gameUrl' => $gameUrl->id,
                 'latestResults' => $results,
             ],
         );

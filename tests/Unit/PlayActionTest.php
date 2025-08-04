@@ -6,7 +6,7 @@ use App\Actions\Play;
 use App\Actions\RetrieveGame;
 use App\Enums\Outcome;
 use App\Helpers\RandomInt;
-use App\Models\AccessToken;
+use App\Models\GameUrl;
 use App\Models\Result;
 use DG\BypassFinals;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,7 +20,7 @@ class PlayActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    private AccessToken $accessToken;
+    private GameUrl $gameUrl;
 
     private RandomInt $randomInt;
 
@@ -31,14 +31,14 @@ class PlayActionTest extends TestCase
         parent::setUp();
         BypassFinals::enable(bypassReadOnly: false);
 
-        $this->accessToken = AccessToken::factory()->create();
+        $this->gameUrl = GameUrl::factory()->create();
 
         $retrieveGameAction = $this->getMockBuilder(RetrieveGame::class)
             ->disableOriginalConstructor()
             ->getMock();
         $retrieveGameAction->expects($this->once())
             ->method('__invoke')
-            ->willReturn($this->accessToken->game);
+            ->willReturn($this->gameUrl->game);
 
         $this->randomInt = $this->getMockBuilder(RandomInt::class)
             ->getMock();
@@ -55,14 +55,14 @@ class PlayActionTest extends TestCase
             ->method('__invoke')
             ->willReturn(10);
 
-        $result = $this->playAction->__invoke($this->accessToken);
+        $result = $this->playAction->__invoke($this->gameUrl);
 
-        $this->assertEquals($this->accessToken->game->id, $result->game_id);
+        $this->assertEquals($this->gameUrl->game->id, $result->game_id);
         $this->assertDatabaseHas(
             Result::class,
             [
                 'id' => $result->id,
-                'game_id' => $this->accessToken->game->id,
+                'game_id' => $this->gameUrl->game->id,
             ],
         );
     }
@@ -78,7 +78,7 @@ class PlayActionTest extends TestCase
             ->method('__invoke')
             ->willReturn($randomNumber);
 
-        $result = $this->playAction->__invoke($this->accessToken);
+        $result = $this->playAction->__invoke($this->gameUrl);
 
         $this->assertEquals($outcome, $result->outcome);
         $this->assertEquals($amount, $result->amount);
@@ -119,7 +119,7 @@ class PlayActionTest extends TestCase
             ->method('__invoke')
             ->willReturn($randomNumber);
 
-        $this->playAction->__invoke($this->accessToken);
+        $this->playAction->__invoke($this->gameUrl);
 
     }
 

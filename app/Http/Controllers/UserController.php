@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CreateAccessToken;
+use App\Actions\CreateGameUrl;
 use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
 
@@ -13,15 +13,15 @@ class UserController extends Controller
         return view('users/register');
     }
 
-    public function create(UserRegistrationRequest $request, CreateAccessToken $createAccessToken)
+    public function create(UserRegistrationRequest $request, CreateGameUrl $createGameUrl)
     {
         $newUser = User::create($request->validated());
 
-        $accessToken = $createAccessToken($newUser);
+        $gameUrl = $createGameUrl($newUser);
 
         return redirect()->route(
             'game.index',
-            ['accessToken' => $accessToken->id],
+            ['gameUrl' => $gameUrl->id],
         );
     }
 }

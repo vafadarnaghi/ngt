@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AccessToken extends Model
+class GameUrl extends Model
 {
     use HasFactory, HasTimestamps, HasUuids, SoftDeletes;
 

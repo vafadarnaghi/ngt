@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('access_tokens', function (Blueprint $table) {
+        Schema::create('game_urls', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->timestamps();
             $table->softDeletes();
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('access_tokens');
+        Schema::dropIfExists('game_urls');
     }
 };

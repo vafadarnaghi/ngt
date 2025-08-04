@@ -7,9 +7,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AccessToken>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\GameUrl>
  */
-class AccessTokenFactory extends Factory
+class GameUrlFactory extends Factory
 {
     /**
      * Define the model's default state.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
-use App\Models\AccessToken;
+use App\Models\GameUrl;
 use App\Models\Result;
 use Illuminate\Support\Collection;
 
@@ -19,10 +19,10 @@ final readonly class RetrieveHistory
     /**
      * @return Collection<Result>
      */
-    public function __invoke(AccessToken $accessToken): Collection
+    public function __invoke(GameUrl $gameUrl): Collection
     {
         return $this->retrieveGame
-            ->__invoke($accessToken)
+            ->__invoke($gameUrl)
             ->results()
             ->orderByDesc('created_at')
             ->limit(self::HISTORY_COUNT)
