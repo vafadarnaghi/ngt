@@ -23,7 +23,7 @@ class GamesController extends Controller
 
     public function create(GameUrl $gameUrl, CreateGameUrl $createGameUrl)
     {
-        $newGameUrl = $createGameUrl($gameUrl);
+        $newGameUrl = $createGameUrl($gameUrl->user);
 
         return redirect()->route(
             'game.index',

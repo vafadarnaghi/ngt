@@ -13,19 +13,9 @@ final readonly class CreateGameUrl
 {
     private const EXPIRE_AFTER_DAYS = 7;
 
-    public function __construct(
-        private RetrieveGame $retrieveGame,
-    ) {}
-
-    public function __invoke(User|GameUrl $source)
+    public function __invoke(User $user)
     {
-        if ($source instanceof User) {
-            $userId = $source->id;
-        } else {
-            $userId = $this->retrieveGame->__invoke($source)->user_id;
-        }
-
-        $newGame = Game::create(['user_id' => $userId]);
+        $newGame = Game::create(['user_id' => $user->id]);
 
         return GameUrl::create([
             'game_id' => $newGame->id,
