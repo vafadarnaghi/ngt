@@ -18,7 +18,7 @@ class GamesController extends Controller
 
     public function create(GameUrl $gameUrl, CreateGameUrl $createGameUrl)
     {
-        $newGameUrl = $createGameUrl($gameUrl->user);
+        $newGameUrl = $createGameUrl($gameUrl->game);
 
         return redirect()->route(
             'game.index',
@@ -38,7 +38,7 @@ class GamesController extends Controller
      */
     public function play(GameUrl $gameUrl, Play $play)
     {
-        $result = $play($gameUrl);
+        $result = $play($gameUrl->game);
 
         return view(
             'game/result',
@@ -51,7 +51,7 @@ class GamesController extends Controller
 
     public function history(GameUrl $gameUrl, RetrieveHistory $retrieveHistory)
     {
-        $results = $retrieveHistory($gameUrl);
+        $results = $retrieveHistory($gameUrl->game);
 
         return view(
             'game/history',

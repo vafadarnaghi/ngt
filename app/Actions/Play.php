@@ -6,7 +6,7 @@ namespace App\Actions;
 
 use App\Enums\Outcome;
 use App\Helpers\RandomInt;
-use App\Models\GameUrl;
+use App\Models\Game;
 use App\Models\Result;
 use Random\RandomException;
 use RuntimeException;
@@ -24,7 +24,7 @@ final readonly class Play
     /**
      * @throws RandomException
      */
-    public function __invoke(GameUrl $gameUrl): Result
+    public function __invoke(Game $game): Result
     {
         $number = $this->randomInt->__invoke(self::MIN_RANDOM_NUMBER, self::MAX_RANDOM_NUMBER);
         if ($number < self::MIN_RANDOM_NUMBER || $number > self::MAX_RANDOM_NUMBER) {
@@ -32,7 +32,7 @@ final readonly class Play
         }
 
         return Result::create([
-            'game_id' => $gameUrl->game->id,
+            'game_id' => $game->id,
             'outcome' => $this->analyzeOutcome($number),
             'amount' => $this->analyzeAmount($number),
         ]);

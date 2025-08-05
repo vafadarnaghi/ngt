@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Actions\Play;
 use App\Enums\Outcome;
 use App\Helpers\RandomInt;
-use App\Models\GameUrl;
+use App\Models\Game;
 use App\Models\Result;
 use DG\BypassFinals;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,7 +19,7 @@ class PlayActionTest extends TestCase
 {
     use RefreshDatabase;
 
-    private GameUrl $gameUrl;
+    private Game $game;
 
     private RandomInt $randomInt;
 
@@ -30,7 +30,7 @@ class PlayActionTest extends TestCase
         parent::setUp();
         BypassFinals::enable(bypassReadOnly: false);
 
-        $this->gameUrl = GameUrl::factory()->create();
+        $this->game = Game::factory()->create();
 
         $this->randomInt = $this->getMockBuilder(RandomInt::class)
             ->getMock();
@@ -47,14 +47,14 @@ class PlayActionTest extends TestCase
             ->method('__invoke')
             ->willReturn(10);
 
-        $result = $this->playAction->__invoke($this->gameUrl);
+        $result = $this->playAction->__invoke($this->game);
 
-        $this->assertEquals($this->gameUrl->game->id, $result->game_id);
+        $this->assertEquals($this->game->id, $result->game_id);
         $this->assertDatabaseHas(
             Result::class,
             [
                 'id' => $result->id,
-                'game_id' => $this->gameUrl->game->id,
+                'game_id' => $this->game->id,
             ],
         );
     }
@@ -70,7 +70,7 @@ class PlayActionTest extends TestCase
             ->method('__invoke')
             ->willReturn($randomNumber);
 
-        $result = $this->playAction->__invoke($this->gameUrl);
+        $result = $this->playAction->__invoke($this->game);
 
         $this->assertEquals($outcome, $result->outcome);
         $this->assertEquals($amount, $result->amount);
@@ -111,7 +111,7 @@ class PlayActionTest extends TestCase
             ->method('__invoke')
             ->willReturn($randomNumber);
 
-        $this->playAction->__invoke($this->gameUrl);
+        $this->playAction->__invoke($this->game);
 
     }
 
